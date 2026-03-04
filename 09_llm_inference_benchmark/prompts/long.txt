@@ -1,0 +1,1 @@
+Explain how GPU architecture enables efficient large language model inference. Discuss parallelism, tensor cores, KV cache, and memory bandwidth limitations.

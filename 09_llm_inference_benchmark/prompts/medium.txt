@@ -1,0 +1,1 @@
+Explain how GPUs accelerate deep learning training and inference, including tensor cores and memory bandwidth.

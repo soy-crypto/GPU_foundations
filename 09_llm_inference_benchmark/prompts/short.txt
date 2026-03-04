@@ -1,0 +1,1 @@
+Explain GPU computing in one paragraph.

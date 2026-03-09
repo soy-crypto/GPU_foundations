@@ -24,7 +24,7 @@ void gemm(const float* A, const float* B, float* C, int N)
 int main()
 {
     //Init
-    int N=512;
+    int N = 512;
     std::vector<float> A(N * N, 1);
     std::vector<float> B(N * N, 1);
     std::vector<float> C(N * N, 0);

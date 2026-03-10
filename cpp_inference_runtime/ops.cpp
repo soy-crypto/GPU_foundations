@@ -32,5 +32,4 @@ Tensor Softmax::forward(const Tensor& input)
     }
 
     return output;
-
 }

@@ -12,14 +12,11 @@ class ReLU : public Operator
 {
     public:
         Tensor forward(const Tensor& input) override;
-
 };
 
 
 class Softmax : public Operator 
 {
-
     public:
         Tensor forward(const Tensor& input) override;
-
 };

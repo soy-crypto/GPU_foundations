@@ -14,3 +14,5 @@ float Tensor::operator()(int r, int c) const
 {
     return data[r * cols + c];
 }
+
+

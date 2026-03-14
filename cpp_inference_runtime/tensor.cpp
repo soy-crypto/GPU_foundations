@@ -15,8 +15,13 @@ float Tensor::operator()(int r, int c) const
     return data[r * cols + c];
 }
 
- //Data pointers
+//Data pointers
 const float* Tensor::getData() const
+{
+    return data;
+}
+
+float* Tensor::getData()
 {
     return data;
 }

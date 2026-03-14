@@ -10,7 +10,7 @@ int main()
     //Init
     /** Init data */
     Tensor input({1,3});
-    data = input.data;
+    float* data = input.data;
     data = {1.0f, 2.0f, 3.0f};
     
     /** Init grap */

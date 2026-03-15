@@ -1,7 +1,5 @@
 # GPU Systems Engineering
 
-This repository contains GPU systems and inference engineering projects.
-
 ## Projects
 
 ### 1. C++ Inference Runtime

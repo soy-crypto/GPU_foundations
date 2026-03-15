@@ -153,19 +153,18 @@ int main()
     // CPU memory
     std::vector<float> h_A(N);
     std::vector<float> h_B(N);
-
     for(int i = 0; i < N; i++)
         h_A[i] = 1.0f;
 
     // GPU memory
     float *d_A, *d_B;
-
     cudaMalloc(&d_A, N * sizeof(float));
     cudaMalloc(&d_B, N * sizeof(float));
 
     // copy CPU -> GPU
     cudaMemcpy(d_A, h_A.data(), N*sizeof(float), cudaMemcpyHostToDevice);
 
+    // call cuda kernels
     std::cout << "Running GPU Microbenchmarks\n\n";
 
     float bw1 = run_bandwidth(d_A, d_B, N);

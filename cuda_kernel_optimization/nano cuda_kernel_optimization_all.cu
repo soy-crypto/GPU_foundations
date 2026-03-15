@@ -82,15 +82,13 @@ __global__ void gemm_tiled_kernel(float* A,float* B,float* C,int N)
     int col = blockIdx.x * TILE + tx;
 
     float sum = 0.0f;
-
-    for(int t=0;t<N/TILE;t++)
+    for(int t = 0; t < N / TILE; t++)
     {
         A_tile[ty][tx] = A[row * N + t * TILE + tx];
         B_tile[ty][tx] = B[(t * TILE + ty) * N + col];
-
         __syncthreads();
 
-        for(int k = 0;k < TILE; k++)
+        for(int k = 0; k < TILE; k++)
         {
             sum += A_tile[ty][k] * B_tile[k][tx];
         }
@@ -113,15 +111,12 @@ int main()
     ////////////////////////////////////////////////////////////
 
     std::cout << "==== Vector Add ====" << std::endl;
-
-    int N = 1<<20;
-
+    int N = 1 << 20;
     std::vector<float> A(N, 1.0f);
     std::vector<float> B(N, 2.0f);
     std::vector<float> C(N);
 
     float *d_A, *d_B, *d_C;
-
     cudaMalloc(&d_A, N * sizeof(float));
     cudaMalloc(&d_B, N * sizeof(float));
     cudaMalloc(&d_C, N * sizeof(float));
@@ -131,11 +126,8 @@ int main()
 
     int block = 256;
     int grid = (N + block - 1) / block;
-
     vector_add_kernel<<<grid,block>>>(d_A, d_B, d_C, N);
-
     cudaMemcpy(C.data(), d_C, N * sizeof(float), cudaMemcpyDeviceToHost);
-
     std::cout << "Result example: " << C[0] << std::endl;
 
     cudaFree(d_A);
@@ -145,11 +137,8 @@ int main()
     ////////////////////////////////////////////////////////////
     // GEMM TEST
     ////////////////////////////////////////////////////////////
-
     std::cout << "\n==== GEMM ====" << std::endl;
-
     int M = 256;
-
     size_t bytes = M*M*sizeof(float);
 
     std::vector<float> h_A(M*M);
@@ -173,9 +162,7 @@ int main()
 
     dim3 block2(TILE, TILE);
     dim3 grid2(M/TILE, M/TILE);
-
     gemm_naive_kernel<<<grid2,block2>>>(g_A, g_B, g_C, M);
-
     cudaMemcpy(h_C.data(), g_C,bytes, cudaMemcpyDeviceToHost);
 
     std::cout << "Naive GEMM result example: " << h_C[0] << std::endl;

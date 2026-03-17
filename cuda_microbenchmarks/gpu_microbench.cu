@@ -163,7 +163,10 @@ int main()
     std::vector<float> h_A(N);
     std::vector<float> h_B(N);
     for(int i = 0; i < N; i++)
+    {
         h_A[i] = 1.0f;
+    }
+        
 
     // GPU memory
     float *d_A, *d_B;

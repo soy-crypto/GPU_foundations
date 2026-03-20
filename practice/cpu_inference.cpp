@@ -63,6 +63,61 @@ class Softmax : public Operator
     public:
         Tensor forward(const Tensor& input) override
         {
-            
+            //Init
+            Tensor output(input.getRows(), input.getCols());
+            float* out = output.getData();
+            const float* in = input.getData();
+
+            // Softmax
+            float maxVal = in[0];
+            for(int i = 0; i < input.getSize(); i++)
+            {
+                maxVal = std::max(maxVal, in[i]);
+            }
+
+            // Sum
+            float sum = 0.0f;
+            for(int i = 0; i < input.getSize(); i++)
+            {
+                out[i] = std::exp(in[i] - maxVal);
+                sum += out[i];
+            }
+
+            for(int i = 0; i < input.getSize(); i++)
+            {
+                out[i] /= sum;
+            }
+
+
+            //Return
+            return output;
         }
-}
+
+};
+
+
+class Graph
+{
+    private:
+        std::vector<Operator*> ops;
+
+    public:
+        void add_op(Operator* op)
+        {
+            ops.push_back(op);
+        }
+
+        Tensor run(const Tensor& input)
+        {
+            Tensor x = input;
+            for(const auto* op : ops)
+            {
+                Tensor out = op->forward(x);
+                x = std::move(out);
+            }
+
+            return x;
+
+        }
+
+};

@@ -121,3 +121,46 @@ class Graph
         }
 
 };
+
+
+int main()
+{
+    //Init
+    /** input */
+    Tensor input(1, 3);
+    float* data = input.getData();
+    for(int i = 0; i < input.getSize(); i++)
+    {
+        data[i] = static_cast<float>(i);
+    }
+
+    /*  Graph */
+    Graph graph;
+    ReLU relu;
+    Softmax softmax;
+    
+    graph.add_op(&relu);
+    graph.add_op(&softmax);
+
+    //Forward
+    auto start = std::chrono::high_resolution_clock::now();
+    Tensor output = graph.run(input);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    //Latency
+    double latency = std::chrono::duration<double, std::milli>(end - start).count();
+
+    //Print
+    std::cout << "Output:" << std::endl;
+    float* out = output.getData();
+    for(int i = 0; i < output.getSize(); i++)
+    {
+        std::cout << out[i] << " ";
+    }
+
+    std::cout << "\n Latency " << latency << " ms\n";
+
+    //Return
+    return 0;
+
+}

@@ -20,7 +20,8 @@
             std::cerr << "CUDA error: " << cudaGetErrorString(err)           \
                       << " at line " << __LINE__ << std::endl;               \
             std::exit(1);                                                    \
-        }                                                                    \
+        }   
+                                                                         \
     } while(0)
 
 ////////////////////////////////////////////////////////////
@@ -136,7 +137,6 @@ class Softmax : public Operator
 __global__ void relu_kernel(const float* input, float* output, int N)
 {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
-
     if (i < N)
     {
         output[i] = input[i] > 0.0f ? input[i] : 0.0f;
@@ -154,7 +154,6 @@ class GPUReLU : public Operator
         Tensor forward(const Tensor& input) override
         {
             Tensor output(input.getRows(), input.getCols());
-
             int N = input.getSize();
             size_t bytes = N * sizeof(float);
 
@@ -238,8 +237,7 @@ int main()
     Tensor output = graph.run(input);
     auto end = std::chrono::high_resolution_clock::now();
 
-    double latency_ms =
-        std::chrono::duration<double, std::milli>(end - start).count();
+    double latency_ms = std::chrono::duration<double, std::milli>(end - start).count();
 
     std::cout << std::fixed << std::setprecision(6);
 

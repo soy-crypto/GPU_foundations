@@ -34,11 +34,13 @@ class Operator
         virtual Tensor forward(const Tensor& input) = 0;
 };
 
+
 class ReLU: public Operator
 {
     public:
         Tensor forward(const Tensor& input) override
         {
+            //
             Tensor output(input.getRows(), input.getCols());
             const float* in = input.getData();
             float* out = output.getData();
@@ -63,7 +65,7 @@ class Softmax: public Operator
             Tensor output(input.getRows(), input.getCols());
             float* out = output.getData();
 
-            //normalization
+            //Normalization
             const float* in = input.getData();
             float maxVal = *(std::max_element(in, in + input.getSize())), sum = 0.0f;
             for(int i = 0; i < input.getSize(); i++)
@@ -77,7 +79,7 @@ class Softmax: public Operator
                 out[i] /= sum;
             }
 
-            //return
+            //Return
             return output;
         }
 
@@ -102,4 +104,11 @@ class Graph
             return x;
         }
         
+}
+
+
+//main
+int main()
+{
+    
 }

@@ -62,4 +62,3 @@ class ReLUL: public Operator
         }
 
 };
-
